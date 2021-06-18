@@ -18,7 +18,6 @@ export class Logger {
    * @param m
    */
   private static log(...m: string[]): void {
-    console.log(m);
     // Do not log in tests.
     if (!process.env.JEST_WORKER_ID) {
       console.log('\x1b[1m', 'Emgen', Logger.reset, ...m);
