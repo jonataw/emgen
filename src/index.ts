@@ -155,7 +155,7 @@ export class Emgen {
           .renderSync({ data: styles })
           .css.toString();
       case Preprocessor.Less:
-        return await importPreprocessor('less').render(styles, {});
+        return (await importPreprocessor('less').render(styles, {})).css;
       case Preprocessor.Stylus:
         return importPreprocessor('stylus')(styles).render();
       default:
