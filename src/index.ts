@@ -57,7 +57,7 @@ export class Emgen {
     }
 
     template = this.addIncludes(template);
-    template = juice(template, { extraCss: styles }); // Inlines styles into HTML.
+    template = juice(template, { extraCss: styles, removeStyleTags: false }); // Inlines styles into HTML.
 
     path = path.replace(
       this.config.input.templates.dir,
