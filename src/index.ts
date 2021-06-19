@@ -91,7 +91,7 @@ export class Emgen {
       );
 
       template = template.replace(comment, include);
-      this.addIncludes(template);
+      return this.addIncludes(template);
     }
 
     return template;
