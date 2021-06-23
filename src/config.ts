@@ -1,3 +1,4 @@
+import path from 'path';
 import * as deepmerge from 'deepmerge';
 import { Logger } from './logger';
 import { Options, Preprocessor } from './types/emgen';
@@ -39,11 +40,11 @@ export class Config {
         dir: options.dir,
         verbose: false,
         input: {
-          templates: { dir: `${options.dir}/templates` },
-          includes: { dir: `${options.dir}/includes` },
-          styles: { dir: `${options.dir}/styles` }
+          templates: { dir: path.join(options.dir, 'templates') },
+          includes: { dir: path.join(options.dir, 'includes') },
+          styles: { dir: path.join(options.dir, 'styles') }
         },
-        output: { auto: true, dir: `${options.dir}/output`, flatten: true }
+        output: { auto: true, dir: path.join(options.dir, 'output'), flatten: true }
       } as Options,
       options
     ]) as DeepRequired<Options>;

@@ -37,7 +37,7 @@ export class File {
   }
 
   public static writeFile(path: string, data: string | NodeJS.ArrayBufferView): void {
-    fs.mkdirSync(path.substring(0, path.lastIndexOf('/')), { recursive: true }); // Make sure the directory we are writing to exists.
+    fs.mkdirSync(path.substring(0, path.lastIndexOf(Path.sep)), { recursive: true }); // Make sure the directory we are writing to exists.
     return fs.writeFileSync(path, data);
   }
 }
