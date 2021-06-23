@@ -16,13 +16,14 @@ export class Emgen {
    */
   constructor(options: Options) {
     Logger.setVerbose(options.verbose);
+
+    Config.validate(options);
     this.config = Config.init(options || {});
     if (this.config.verbose) {
       Logger.info(
         'Additional logging will be printed. You can disable this by setting { verbose: false }.'
       );
     }
-    Config.validate(this.config);
     Logger.info('Configuration:', JSON.stringify(this.config));
 
     if (this.config.output.auto) {
