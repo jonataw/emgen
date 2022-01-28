@@ -8,7 +8,10 @@ class MissingConfigurationOptionError extends Error {
   constructor(missing: (keyof Options)[]) {
     super();
 
-    Logger.error('The following required configuration options are missing:', missing.join(', '));
+    Logger.error(
+      'The following required configuration options are missing:',
+      missing.join(', ')
+    );
 
     // Set the prototype explicitly.
     Object.setPrototypeOf(this, MissingConfigurationOptionError.prototype);
@@ -38,9 +41,9 @@ export class Config {
         verbose: false,
         vue: false,
         input: {
-          templates: { dir: path.join(dir, 'templates') },
-          includes: { dir: path.join(dir, 'includes') },
-          styles: { dir: path.join(dir, 'styles') }
+          templates: { dir: `${options.dir}/templates` },
+          includes: { dir: `${options.dir}/includes` },
+          styles: { dir: `${options.dir}/styles` }
         },
         output: { auto: true, dir: `${options.dir}/.compiled`, flatten: true }
       },
@@ -66,7 +69,10 @@ export class Config {
     }
 
     const preprocessor = config.input?.styles?.preprocessor;
-    if (preprocessor && !Object.values<string>(Preprocessor).includes(preprocessor)) {
+    if (
+      preprocessor &&
+      !Object.values<string>(Preprocessor).includes(preprocessor)
+    ) {
       // Preprocessor is defined but not a valid preprocessor.
       throw new UnknownPreprocessorError(preprocessor);
     }
