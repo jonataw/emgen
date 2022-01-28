@@ -1,6 +1,7 @@
 export interface Options {
   dir: string;
   verbose?: boolean;
+  transpile?: boolean;
   vue?: boolean;
   /**
    * Provide translations for your templates.

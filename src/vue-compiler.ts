@@ -33,7 +33,7 @@ export const useVueCompiler = (config: DeepRequired<Options>): Compiler => {
     );
 
     path = Path.normalize(
-      config.output.dir + '/' + name.replace('.vue', '.ts')
+      config.output.dir + '/' + name.replace('.vue', '.js')
     );
 
     Logger.info('Writing to:', path);
@@ -41,7 +41,7 @@ export const useVueCompiler = (config: DeepRequired<Options>): Compiler => {
     File.writeFile(path, component);
   };
 
-  const convertSFC = (path: string) => {
+  const convertSFC = (path: string): string => {
     const COMPONENT_START = 'export default defineComponent({';
 
     let data;
@@ -93,7 +93,18 @@ export const useVueCompiler = (config: DeepRequired<Options>): Compiler => {
       b +
       script.substring(position);
 
-    component = component.replaceAll(`.vue'`, `'`).replace(/[\n\r]/gi, '');
+    component = component.replaceAll(`.vue'`, `'`);
+
+    if (config.transpile && component) {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const dep = require('typescript');
+        component = dep.transpile(component) as string;
+      } catch (error) {
+        Logger.error(`You need to have package 'typescript' installed.`);
+        throw new Error();
+      }
+    }
 
     return component;
   };

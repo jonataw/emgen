@@ -5,14 +5,15 @@ describe('vue-templates', (): void => {
   test('should compile templates', async (): Promise<void> => {
     const emgen = createEmgen({
       dir: __dirname + '/vue',
+      transpile: false,
       vue: true
     });
 
-    const basic = File.readFile(emgen.config.output.dir + '/Basic.ts');
+    const basic = File.readFile(emgen.config.output.dir + '/Basic.js');
     expect(basic.includes('button') && basic.includes('Basic')).toBe(true);
 
     const basicWithImport = File.readFile(
-      emgen.config.output.dir + '/BasicWithImport.ts'
+      emgen.config.output.dir + '/BasicWithImport.js'
     );
     expect(
       basicWithImport.includes(`import Basic from './Basic'`) &&

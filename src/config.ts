@@ -39,6 +39,7 @@ export class Config {
       {
         dir: options.dir,
         verbose: false,
+        transpile: true,
         vue: false,
         input: {
           templates: { dir: `${options.dir}/templates` },
