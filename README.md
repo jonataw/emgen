@@ -4,7 +4,7 @@ Generate email templates with automatic file inclusion and stylesheet inlining.
 
 ## Installation
 
-**Node.js 10.x or higher is required.**
+**Node.js 14.x or higher is required.**
 
 ```bash
 npm install emgen
@@ -110,15 +110,15 @@ Override path to input templates directory.
 
 ### output.dir
 
-Override path to output directory. Your generated templates will be written here.
+Override path to output directory. Your compiled templates will be written here.
 
-- Default: `[dir]/output`
+- Default: `[dir]/.compiled`
 
 ### output.auto
 
 Automatically generates your templates and writes them to the output directory.
 
-If this options is set to false, you can use `generateTemplate()` or `generateTemplates()` methods to manually generate templates.
+If this options is set to false, you can use `compile()` or `compileTemplate()` methods to manually generate templates.
 
 - Default: `true`
 

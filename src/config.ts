@@ -34,19 +34,22 @@ export class Config {
    * @param options
    */
   public static init(options: Options): DeepRequired<Options> {
-    return deepmerge.all<Options>([
+    const config = deepmerge.all<Options>([
       {
         dir: options.dir,
         verbose: false,
+        vue: false,
         input: {
           templates: { dir: `${options.dir}/templates` },
           includes: { dir: `${options.dir}/includes` },
           styles: { dir: `${options.dir}/styles` }
         },
-        output: { auto: true, dir: `${options.dir}/output`, flatten: true }
-      } as Options,
+        output: { auto: true, dir: `${options.dir}/.compiled`, flatten: true }
+      },
       options
     ]) as DeepRequired<Options>;
+
+    return config;
   }
 
   /**

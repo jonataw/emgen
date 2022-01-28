@@ -1,6 +1,34 @@
 export interface Options {
   dir: string;
   verbose?: boolean;
+  vue?: boolean;
+  /**
+   * Provide translations for your templates.
+   * Only applies if `vue` is set to `true`.
+   * @see
+   */
+  i18n?: {
+    /**
+     * The default locale if none is provided.
+     * It is also used as fallback if translation does not exist in requested locale.
+     */
+    defaultLocale: string;
+    /**
+     * @see https://kazupon.github.io/vue-i18n
+     * @example
+     * ```ts
+     * translations: {
+     *   en: {
+     *     hello: "Hello"
+     *   },
+     *   sv: {
+     *     hello: "Hej"
+     *   }
+     * }
+     * ```
+     */
+    translations?: Record<string, Record<string, string>>;
+  };
   input?: {
     templates?: {
       /**
@@ -12,6 +40,7 @@ export interface Options {
     includes?: {
       /**
        * Directory to look for includes in.
+       * Only applies if `vue` is set to `false`.
        * @default '{dir}/includes'
        */
       dir?: string;
@@ -35,15 +64,15 @@ export interface Options {
   output?: {
     /**
      * Output directory.
-     * @default '{dir}/output'
+     * @default '{dir}/.compiled'
      */
     dir?: string;
     /**
      * Instantly generate all templates found in the templates directory.
      * If this is set to false, generate your templates with:
-     *   - Emgen.generateTemplates(dir: string) - Generates all templates in directory.
+     *   - Emgen.compile(directory: string) - Generates all templates in directory.
      *     or
-     *   - Emgen.generateTemplate(filename: string) - Generates a single template.
+     *   - Emgen.compileTemplate(filename: string, styles?: string) - Generates a single template.
      * @default true
      */
     auto?: boolean;
@@ -61,4 +90,16 @@ export enum Preprocessor {
   Sass = 'sass',
   Less = 'less',
   Stylus = 'stylus'
+}
+
+export interface RenderOptions {
+  locale?: string;
+  translations?: Record<string, Record<string, string>>;
+  props?: Record<string, unknown>;
+}
+
+export interface Compiler {
+  compile: (directory: string) => void;
+  compileTemplate: (path: string, styles?: string) => void;
+  render: (name: string, options?: RenderOptions) => Promise<string>;
 }

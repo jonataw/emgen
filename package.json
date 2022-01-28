@@ -1,7 +1,7 @@
 {
   "name": "emgen",
-  "description": "Generate email templates with automatic file inclusion and stylesheet inlining.",
-  "version": "0.0.6",
+  "description": "Generate email templates with automatic file inclusion and stylesheet inlining, or even with Vue templates!",
+  "version": "0.1.0",
   "author": "Jonatan Wackström <jonatan.wackstrom@gmail.com>",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -22,7 +22,8 @@
     "html",
     "sass",
     "less",
-    "stylus"
+    "stylus",
+    "vue"
   ],
   "dependencies": {
     "deepmerge": "^4.2.2",
@@ -37,12 +38,14 @@
     "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
+    "@vue/compiler-sfc": "^3.2.29",
     "eslint": "^7.28.0",
     "jest": "^27.0.4",
     "rimraf": "^3.0.2",
     "rollup": "^2.52.1",
     "ts-jest": "^27.0.3",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.4",
+    "vue-i18n": "^9.2.0-beta.30"
   },
   "engines": {
     "node": ">=10"

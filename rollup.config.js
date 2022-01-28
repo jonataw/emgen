@@ -25,7 +25,14 @@ export default [
         exports: 'auto'
       }
     ],
-    external: ['juice', 'deepmerge'],
+    external: [
+      'juice',
+      'deepmerge',
+      '@vue/compiler-sfc',
+      '@vue/server-renderer',
+      'vue',
+      'vue-i18n'
+    ],
     plugins: [
       resolve({
         extensions

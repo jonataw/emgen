@@ -3,15 +3,21 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationDir": "./dist",
-    "module": "es6",
+    "module": "esnext",
     "moduleResolution": "Node",
     "noImplicitAny": true,
     "noImplicitThis": true,
     "outDir": "./dist",
-    "target": "es5",
+    "target": "esnext",
     "skipLibCheck": true,
     "strictFunctionTypes": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "esModuleInterop": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
   },
   "include": [
     "src/**/*"
