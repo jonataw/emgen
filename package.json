@@ -1,7 +1,7 @@
 {
   "name": "emgen",
   "description": "Generate email templates with automatic file inclusion and stylesheet inlining, or even with Vue templates!",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Jonatan Wackström <jonatan.wackstrom@gmail.com>",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -56,7 +56,7 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "npm run lint && npm run test && npm run build",
+    "prepublishOnly": "npm i && npm run lint && npm run test && npm run build",
     "build": "rimraf dist && rollup -c && tsc --emitDeclarationOnly",
     "lint": "eslint",
     "test": "jest"
