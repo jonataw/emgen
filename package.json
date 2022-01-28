@@ -58,7 +58,7 @@
   "scripts": {
     "prepublishOnly": "npm run lint && npm run test && npm run build",
     "build": "rimraf dist && rollup -c && tsc --emitDeclarationOnly",
-    "lint": "eslint --ext .ts src",
+    "lint": "eslint",
     "test": "jest"
   },
   "jest": {
