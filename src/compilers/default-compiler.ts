@@ -1,18 +1,24 @@
+import Path from 'path';
 import juice from 'juice';
-import { Compiler, Options } from './types/emgen';
-import { Logger } from './logger';
-import { File } from './file';
-import { DeepRequired } from './types/extra';
-import { importGlobalStyles, preprocessStyles } from './util';
-import * as Path from 'path';
+import { File } from '../file';
+import { Logger } from '../logger';
+import { BaseCompiler } from './base-compiler';
+import { EmgenOptions } from '../types/emgen';
+import { DeepRequired } from '../types/extra';
 
-export const useDefaultCompiler = (config: DeepRequired<Options>): Compiler => {
+export class DefaultCompiler extends BaseCompiler {
+  constructor(config: DeepRequired<EmgenOptions>) {
+    super(config);
+
+    this.checkDependencies();
+  }
+
   /**
    * Adds includes to template.
    *
    * @param template
    */
-  const addIncludes = (template: string): string => {
+  private addIncludes(template: string): string {
     const index = template.indexOf('#include');
     if (index !== -1) {
       const startIndex = template.substring(0, index).lastIndexOf('<!--');
@@ -28,18 +34,18 @@ export const useDefaultCompiler = (config: DeepRequired<Options>): Compiler => {
 
       try {
         const include = File.readFile(
-          `${config.input.includes.dir}/${filename}`
+          `${this.config.input.includes.dir}/${filename}`
         );
 
         template = template.replace(comment, include);
-        return addIncludes(template);
+        return this.addIncludes(template);
       } catch (error) {
         Logger.error(`Referenced include ${filename} was not found.`);
       }
     }
 
     return template;
-  };
+  }
 
   /**
    * Compiles a single template at path.
@@ -47,20 +53,17 @@ export const useDefaultCompiler = (config: DeepRequired<Options>): Compiler => {
    * @param path
    * @param styles Optionally provide the style string. Styles will be created if missing.
    */
-  const compileTemplate = async (
-    path: string,
-    styles?: string
-  ): Promise<void> => {
+  public async compileTemplate(path: string, styles?: string): Promise<void> {
     Logger.info('Generating template:', path);
     let template = File.readFile(path);
 
     if (!styles) {
-      styles = await preprocessStyles(
-        await importGlobalStyles(config.input.styles.dir)
+      styles = await this.preprocessStyles(
+        await this.importGlobalStyles(this.config.input.styles.dir)
       );
     }
 
-    template = addIncludes(template);
+    template = this.addIncludes(template);
 
     try {
       template = juice(template, { extraCss: styles, removeStyleTags: false }); // Inlines styles into HTML.
@@ -71,38 +74,34 @@ export const useDefaultCompiler = (config: DeepRequired<Options>): Compiler => {
     }
 
     const name = path.substring(
-      path.indexOf(Path.normalize(config.input.templates.dir)) +
-        Path.normalize(config.input.templates.dir).length +
+      path.indexOf(Path.normalize(this.config.input.templates.dir)) +
+        Path.normalize(this.config.input.templates.dir).length +
         1
     );
 
-    path = Path.normalize(config.output.dir + '/' + name);
+    path = Path.normalize(this.config.output.dir + '/' + name);
 
     Logger.info('Writing to:', path);
     File.writeFile(path, template);
-  };
+  }
 
   /**
    * Compiles all templates in provided directory.
    *
    * @param directory
    */
-  const compile = async (directory: string) => {
-    const styles = await preprocessStyles(
-      await importGlobalStyles(config.input.styles.dir)
+  public async compile(directory: string): Promise<void> {
+    const styles = await this.preprocessStyles(
+      await this.importGlobalStyles(this.config.input.styles.dir)
     );
 
     const paths = File.getFilesRecursively(directory);
     paths.forEach((path) => {
-      compileTemplate(path, styles);
+      this.compileTemplate(path, styles);
     });
-  };
+  }
 
-  return {
-    compile,
-    compileTemplate,
-    render: () => {
-      throw new Error('Render is not available when using default compiler.');
-    }
-  };
-};
+  public async render(): Promise<string> {
+    throw new Error('Render is not available when using default compiler.');
+  }
+}

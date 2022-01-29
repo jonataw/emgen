@@ -1,4 +1,4 @@
-export interface Options {
+export interface EmgenOptions {
   dir: string;
   verbose?: boolean;
   transpile?: boolean;
@@ -99,8 +99,4 @@ export interface RenderOptions {
   props?: Record<string, unknown>;
 }
 
-export interface Compiler {
-  compile: (directory: string) => void;
-  compileTemplate: (path: string, styles?: string) => void;
-  render: (name: string, options?: RenderOptions) => Promise<string>;
-}
+export type DependencyList = { name: string; version: string }[];

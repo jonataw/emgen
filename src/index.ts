@@ -1,53 +1,34 @@
+import { BaseCompiler } from './compilers/base-compiler';
+import { DefaultCompiler } from './compilers/default-compiler';
+import { VueCompiler } from './compilers/vue-compiler';
 import { Config } from './config';
-import { useDefaultCompiler } from './default-compiler';
 import { Logger } from './logger';
-import { Compiler, Options } from './types/emgen';
-import { useVueCompiler } from './vue-compiler';
+import { EmgenOptions } from './types/emgen';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function createEmgen(options: Options) {
-  let strategy: Compiler;
+export { default as version } from './version';
+
+export function createEmgen(options: EmgenOptions): BaseCompiler {
+  let compiler: BaseCompiler;
 
   const config = Config.init(options || {});
+
   Logger.setVerbose(config.verbose);
   Logger.info(
     'Additional logging will be printed. You can disable this by setting { verbose: false }.'
   );
+
   Config.validate(config);
   Logger.info('Configuration:', JSON.stringify(config));
 
   if (config.vue) {
-    strategy = useVueCompiler(config);
+    compiler = new VueCompiler(config);
   } else {
-    strategy = useDefaultCompiler(config);
+    compiler = new DefaultCompiler(config);
   }
 
   if (config.output.auto) {
-    strategy.compile(config.input.templates.dir);
+    compiler.compile(config.input.templates.dir);
   }
 
-  /**
-   * Compiles all templates in provided directory.
-   *
-   * @deprecated Use compile instead.
-   * @param directory
-   */
-  const generateTemplates = (directory: string) => strategy.compile(directory);
-
-  /**
-   * Compiles a single template at path.
-   *
-   * @deprecated Use compileTemplate instead.
-   * @param path
-   * @param styles
-   */
-  const generateTemplate = (path: string, styles?: string) =>
-    strategy.compileTemplate(path, styles);
-
-  return {
-    config,
-    ...strategy,
-    generateTemplate,
-    generateTemplates
-  };
+  return compiler;
 }

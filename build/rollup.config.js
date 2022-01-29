@@ -1,5 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
-import pkg from './package.json';
+import { terser } from 'rollup-plugin-terser';
+import pkg from '../package.json';
 import babel from '@rollup/plugin-babel';
 
 const extensions = ['.ts'];
@@ -13,34 +14,27 @@ export default [
       {
         file: pkg.main,
         format: 'cjs',
-        sourcemap: 'inline',
         banner,
         exports: 'auto'
       },
       {
         file: pkg.module,
         format: 'es',
-        sourcemap: 'inline',
         banner,
         exports: 'auto'
       }
     ],
-    external: [
-      'juice',
-      'deepmerge',
-      '@vue/compiler-sfc',
-      '@vue/server-renderer',
-      'vue',
-      'vue-i18n'
-    ],
+    external: ['juice', 'deepmerge'],
     plugins: [
       resolve({
         extensions
       }),
       babel({
+        babelHelpers: 'bundled',
         exclude: 'node_modules/**',
         extensions
-      })
+      }),
+      terser()
     ]
   }
 ];

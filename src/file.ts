@@ -1,5 +1,5 @@
-import * as Path from 'path';
-import * as fs from 'fs';
+import fs from 'fs';
+import Path from 'path';
 
 export class File {
   private static isDirectory(path: string): boolean {
@@ -36,8 +36,13 @@ export class File {
     return fs.readFileSync(path, 'utf-8').toString();
   }
 
-  public static writeFile(path: string, data: string | NodeJS.ArrayBufferView): void {
-    fs.mkdirSync(path.substring(0, path.lastIndexOf(Path.sep)), { recursive: true }); // Make sure the directory we are writing to exists.
+  public static writeFile(
+    path: string,
+    data: string | NodeJS.ArrayBufferView
+  ): void {
+    fs.mkdirSync(path.substring(0, path.lastIndexOf(Path.sep)), {
+      recursive: true
+    }); // Make sure the directory we are writing to exists.
     return fs.writeFileSync(path, data);
   }
 }

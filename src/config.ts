@@ -1,11 +1,10 @@
-import * as path from 'path';
-import * as deepmerge from 'deepmerge';
+import { deepmerge } from './deepmerge';
 import { Logger } from './logger';
-import { Options, Preprocessor } from './types/emgen';
+import { EmgenOptions, Preprocessor } from './types/emgen';
 import { DeepRequired } from './types/extra';
 
 class MissingConfigurationOptionError extends Error {
-  constructor(missing: (keyof Options)[]) {
+  constructor(missing: (keyof EmgenOptions)[]) {
     super();
 
     Logger.error(
@@ -34,8 +33,8 @@ export class Config {
    * Merges the default configuration options with the provided options.
    * @param options
    */
-  public static init(options: Options): DeepRequired<Options> {
-    const config = deepmerge.all<Options>([
+  public static init(options: EmgenOptions): DeepRequired<EmgenOptions> {
+    const config = deepmerge<EmgenOptions>(
       {
         dir: options.dir,
         verbose: false,
@@ -49,7 +48,7 @@ export class Config {
         output: { auto: true, dir: `${options.dir}/.compiled`, flatten: true }
       },
       options
-    ]) as DeepRequired<Options>;
+    ) as DeepRequired<EmgenOptions>;
 
     return config;
   }
@@ -58,10 +57,10 @@ export class Config {
    * Validates the configuration object.
    * @param config
    */
-  public static validate(config: Options): void {
+  public static validate(config: EmgenOptions): void {
     Logger.info('Validating config...');
 
-    const required: (keyof Options)[] = ['dir']; // Required options.
+    const required: (keyof EmgenOptions)[] = ['dir']; // Required options.
     const missing = required.filter((r) => !config[r]);
 
     if (missing.length) {
