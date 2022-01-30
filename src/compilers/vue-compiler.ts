@@ -195,25 +195,22 @@ export class VueCompiler extends BaseCompiler {
     const addExtendStyle = (component: EmComponent) => {
       if (component.extends) {
         style = style + component.extends.style;
-        if (component.extends.extends) {
-          addExtendStyle(component.extends);
-        }
+        addExtendStyle(component.extends);
+        addComponentStyle(component.extends);
       }
     };
-
-    addExtendStyle(component);
 
     const addComponentStyle = (component: EmComponent) => {
       if (component.components) {
         for (const [, c] of Object.entries(component.components)) {
           style += c.style;
-          if (c.components) {
-            addComponentStyle(c);
-          }
+          addComponentStyle(c);
+          addExtendStyle(c);
         }
       }
     };
 
+    addExtendStyle(component);
     addComponentStyle(component);
 
     style = await this.preprocessStyles(
