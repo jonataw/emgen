@@ -26,7 +26,6 @@
     "vue"
   ],
   "dependencies": {
-    "deepmerge": "^4.2.2",
     "juice": "^8.0.0"
   },
   "devDependencies": {

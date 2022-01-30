@@ -24,7 +24,7 @@ export default [
         exports: 'auto'
       }
     ],
-    external: ['juice', 'deepmerge'],
+    external: ['juice'],
     plugins: [
       resolve({
         extensions
