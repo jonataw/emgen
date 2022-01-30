@@ -176,6 +176,10 @@ export class VueCompiler extends BaseCompiler {
     style = `.null{color:unset}\n` + style; // Juice has trouble working with @import and skips first CSS rule. Therefore we add a first rule.
     style = style + component.style;
 
+    if (component.extends) {
+      style = style + component.extends.style;
+    }
+
     if (component.components) {
       style =
         style +

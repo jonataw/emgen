@@ -1,7 +1,7 @@
 {
   "name": "emgen",
   "description": "Generate email templates with automatic file inclusion and stylesheet inlining, or even with Vue templates!",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Jonatan Wackström <jonatan.wackstrom@gmail.com>",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",

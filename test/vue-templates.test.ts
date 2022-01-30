@@ -97,4 +97,14 @@ describe('vue-templates', (): void => {
     const rendered = await emgen.render('Translate', { locale: 'en' });
     expect(rendered.includes('HelloWorld')).toBe(true);
   });
+
+  test('should inherit css from extended component', async (): Promise<void> => {
+    const emgen = createEmgen({
+      dir: __dirname + '/vue',
+      vue: true
+    });
+
+    const rendered = await emgen.render('Extends');
+    expect(rendered.includes('color: red')).toBe(true);
+  });
 });
