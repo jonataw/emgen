@@ -1,6 +1,14 @@
 import Path from 'path';
 import juice from 'juice';
-import { CreateAppFunction } from 'vue';
+import {
+  CreateAppFunction,
+  ConcreteComponent,
+  App,
+  Component,
+  VueElementConstructor,
+  FunctionalComponent,
+  AppContext
+} from 'vue';
 import { SFCParseOptions, SFCParseResult } from '@vue/compiler-sfc';
 import { BaseCompiler } from './base-compiler';
 import { File } from '../file';
@@ -144,10 +152,18 @@ export class VueCompiler extends BaseCompiler {
   }
 
   public async render(name: string, options?: RenderOptions): Promise<string> {
-    const component = (await require(`${this.config.output.dir}/${name}`))
-      .default;
+    type EmComponent = {
+      components: Record<string, EmComponent>;
+      style?: string;
+      extends?: EmComponent;
+      template?: string;
+    };
 
-    const app = this.createSSRApp(component, options?.props);
+    const component: EmComponent = (
+      await require(`${this.config.output.dir}/${name}`)
+    ).default;
+
+    const app: App = this.createSSRApp(component, options?.props);
 
     const locale = options?.locale || this.config.i18n?.defaultLocale;
     if (locale) {
@@ -176,19 +192,29 @@ export class VueCompiler extends BaseCompiler {
     style = `.null{color:unset}\n` + style; // Juice has trouble working with @import and skips first CSS rule. Therefore we add a first rule.
     style = style + component.style;
 
-    if (component.extends) {
-      style = style + component.extends.style;
-    }
+    const addExtendStyle = (component: EmComponent) => {
+      if (component.extends) {
+        style = style + component.extends.style;
+        if (component.extends.extends) {
+          addExtendStyle(component.extends);
+        }
+      }
+    };
 
-    if (component.components) {
-      style =
-        style +
-        Object.entries(component.components)
-          .map(([_key, value]) => {
-            return (value as any).style;
-          })
-          .join('\n');
-    }
+    addExtendStyle(component);
+
+    const addComponentStyle = (component: EmComponent) => {
+      if (component.components) {
+        for (const [, c] of Object.entries(component.components)) {
+          style += c.style;
+          if (c.components) {
+            addComponentStyle(c);
+          }
+        }
+      }
+    };
+
+    addComponentStyle(component);
 
     style = await this.preprocessStyles(
       style,

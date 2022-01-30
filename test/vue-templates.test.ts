@@ -76,8 +76,11 @@ describe('vue-templates', (): void => {
       vue: true
     });
 
-    const rendered = await emgen.render('InlineStyleWithChild');
+    const rendered = await emgen.render('InlineStyleInherit');
     expect(rendered.includes('color: red')).toBe(true);
+
+    const rendered2 = await emgen.render('InlineStyleInheritDeep');
+    expect(rendered2.includes('color: red')).toBe(true);
   });
 
   test('should translate content', async (): Promise<void> => {
@@ -106,5 +109,8 @@ describe('vue-templates', (): void => {
 
     const rendered = await emgen.render('Extends');
     expect(rendered.includes('color: red')).toBe(true);
+
+    const rendered2 = await emgen.render('ExtendsDeep');
+    expect(rendered2.includes('color: red')).toBe(true);
   });
 });
