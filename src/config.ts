@@ -38,6 +38,7 @@ export class Config {
       {
         dir: options.dir,
         verbose: false,
+        telemetry: true,
         transpile: true,
         vue: false,
         input: {

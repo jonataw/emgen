@@ -1,6 +1,7 @@
 export interface EmgenOptions {
   dir: string;
   verbose?: boolean;
+  telemetry?: boolean;
   transpile?: boolean;
   vue?: boolean;
   /**
