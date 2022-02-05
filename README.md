@@ -1,132 +1,20 @@
 # Emgen
 
-Generate email templates with automatic file inclusion and stylesheet inlining.
+Emgen allows you to easily generate HTML email templates. Features include:
+
+- **Automatic stylesheet inlining**: Write your CSS (or [Sass/Less/Stylus](https://jonataw.github.io/emgen/css-preprocessors)) in a separate file and Emgen will automatically inline it into your HTML.
+- **File inclusion**: Allows you to reuse common elements of your templates by keeping them in separate fields and referring to them with a comment.
+- [**Support for Vue templates**](https://jonataw.github.io/emgen/usage-vue): Use Vue.js to create your templates.
 
 ## Installation
 
-**Node.js 14.x or higher is required.**
-
 ```bash
 npm install emgen
-# OR
-yarn add emgen
 ```
 
-## Usage
+## Documentation
 
-```ts
-import { Emgen } from 'emgen';
-
-// Provide the directory where your templates are:
-const emgen = new Emgen({
-  dir: 'emails'
-});
-```
-
-The `dir` configuration option is required and should be the path where your includes, styles and templates are stored.
-
-By default Emgen assumes your directory setup to be:
-
-```
-{dir}
-├── includes
-│   ├── file.html
-│   └── ...
-├── styles
-│   ├── file.css
-│   └── ...
-└── templates
-    ├── file.html
-    └── ...
-```
-
-See [configuration](#configuration) for how to override these paths.
-
-## CSS Preprocessors
-
-To use a CSS preprocessor set the `input.styles.preprocessor` option. Valid options are `'sass'`, `'less'` or `'stylus'`.
-
-**Preprocessor dependencies are not included in Emgen and have to be installed separately:**
-
-```bash
-# Sass
-npm install sass
-
-# Less
-npm install less
-
-# Stylus
-npm install stylus
-```
-
-```ts
-new Emgen({
-  dir: 'emails',
-  input: {
-    styles: {
-      preprocessor: 'sass'
-    }
-  }
-});
-```
-
-## Includes
-
-To use automatic includes add a comment with this syntax in your template:
-
-```html
-<!-- #include filename.html -->
-```
-
-`filename.html` should be a file in your includes directory.
-
-## Configuration
-
-### dir
-
-Sets the path to where your includes, styles and templates are stored.
-
-### input.includes.dir
-
-Override path to input includes directory.
-
-- Default: `[dir]/includes`
-
-### input.styles.dir
-
-Override path to input styles directory.
-
-- Default: `[dir]/styles`
-
-### input.styles.preprocessor
-
-Define a preprocessor for your styles. Valid options are `'sass'`, `'less'` or `'stylus'`.
-
-### input.templates.dir
-
-Override path to input templates directory.
-
-- Default: `[dir]/templates`
-
-### output.dir
-
-Override path to output directory. Your compiled templates will be written here.
-
-- Default: `[dir]/.compiled`
-
-### output.auto
-
-Automatically generates your templates and writes them to the output directory.
-
-If this options is set to false, you can use `compile()` or `compileTemplate()` methods to manually generate templates.
-
-- Default: `true`
-
-### verbose
-
-Provides additional context and information.
-
-- Default: `false`
+Please refer to the [documentation](https://jonataw.github.io/emgen) for information on how to get started.
 
 ## Tests
 
