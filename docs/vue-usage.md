@@ -112,7 +112,9 @@ You can now use vue-i18n in your templates:
 
 ```html
 <template>
+  {% raw %}
   <div>{{ $t('hello', { firstname }) }} {{ $t('bye') }}</div>
+  {% endraw %}
 </template>
 ```
 
