@@ -1,14 +1,6 @@
 import Path from 'path';
 import juice from 'juice';
-import {
-  CreateAppFunction,
-  ConcreteComponent,
-  App,
-  Component,
-  VueElementConstructor,
-  FunctionalComponent,
-  AppContext
-} from 'vue';
+import { CreateAppFunction, App } from 'vue';
 import { SFCParseOptions, SFCParseResult } from '@vue/compiler-sfc';
 import { BaseCompiler } from './base-compiler';
 import { File } from '../file';
