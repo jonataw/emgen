@@ -1,18 +1,13 @@
 theme: jekyll-theme-minimal
 
-pages:
+sidebar:
   - title: Installation
     url: /installation
-    order: 1
   - title: Configuration
     url: /configuration
-    order: 2
   - title: Usage - Default
     url: /usage
-    order: 3
   - title: Usage - Vue
     url: /usage-vue
-    order: 4
   - title: CSS Preprocessors
     url: /css-preprocessors
-    order: 5
