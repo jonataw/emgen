@@ -88,7 +88,7 @@ To create translateable templates, install the `vue-i18n` package:
 npm install vue-i18n@">9.0.0"
 ```
 
-Enable i18n by setting the `i18n.defaultLocale` [configuration](/configuration) option:
+Enable i18n by setting the `i18n.defaultLocale` [configuration](/emgen/configuration) option:
 
 ```ts
 const emgen = createEmgen({

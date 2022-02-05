@@ -43,10 +43,10 @@ Below are the possible configuration options that can be passed to `createEmgen`
 
 - Default: `true`
 
-**`i18n.defaultLocale`**: Set the default fallback locale when using i18n. See [i18n](/vue-usage#i18n) for more information.
+**`i18n.defaultLocale`**: Set the default fallback locale when using i18n. See [i18n](/emgen/usage-vue#i18n) for more information.
 
 - Only used if `vue` is set to `true`.
 
-**`i18n.translations`**: Set global translations. See [i18n](/vue-usage#i18n) for more information.
+**`i18n.translations`**: Set global translations. See [i18n](/emgen/usage-vue#i18n) for more information.
 
 - Only used if `vue` is set to `true`.

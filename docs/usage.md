@@ -2,7 +2,7 @@
 
 ### Quickstart
 
-The usage example below applies to the default HTML template compiler. See [Vue Usage](/vue-usage) for Vue compiler usage documentation.
+The usage example below applies to the default HTML template compiler. See [Vue Usage](/emgen/usage-vue) for Vue compiler usage documentation.
 
 By default Emgen assumes your directory setup to be:
 
@@ -37,7 +37,7 @@ To use automatic includes add a comment with the following syntax in your templa
 <!-- #include filename.html -->
 ```
 
-### Full Example
+#### Full Example
 
 Assume you have a template `templates/template.html`...
 
@@ -69,4 +69,4 @@ Assume you have a template `templates/template.html`...
 
 Add CSS files to the `styles` directory and Emgen will automatically inline them into your generated HTML.
 
-To use preprocessors, see [CSS Preprocessors](/css-preprocessors).
+To use preprocessors, see [CSS Preprocessors](/emgen/css-preprocessors).

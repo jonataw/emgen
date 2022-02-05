@@ -15,7 +15,7 @@ npm install less
 npm install stylus
 ```
 
-Set the `input.styles.preprocessor` [configuration](/configuration) option:
+Set the `input.styles.preprocessor` [configuration](/emgen/configuration) option:
 
 ```ts
 const emgen = createEmgen({
@@ -28,7 +28,7 @@ const emgen = createEmgen({
 });
 ```
 
-Emgen will now try process your styles with the configured preprocessor. Make sure to change the file extension of your style files.
+Emgen will now process your styles with the configured preprocessor. Make sure to change the file extension of your style files.
 
 
 
