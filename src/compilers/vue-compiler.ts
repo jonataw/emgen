@@ -164,8 +164,8 @@ export class VueCompiler extends BaseCompiler {
           fallbackLocale: this.config.i18n?.defaultLocale,
           messages: options?.translations || this.config.i18n?.translations,
           locale: locale,
-          silentFallbackWarn: true,
-          silentTranslationWarn: true
+          silentFallbackWarn: !this.config.verbose,
+          silentTranslationWarn: !this.config.verbose
         })
       );
 
