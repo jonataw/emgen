@@ -31,6 +31,7 @@ class UnknownPreprocessorError extends Error {
 export class Config {
   /**
    * Merges the default configuration options with the provided options.
+   *
    * @param options
    */
   public static init(options: EmgenOptions): DeepRequired<EmgenOptions> {
@@ -56,6 +57,7 @@ export class Config {
 
   /**
    * Validates the configuration object.
+   *
    * @param config
    */
   public static validate(config: EmgenOptions): void {

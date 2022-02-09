@@ -90,6 +90,13 @@ export abstract class BaseCompiler {
     styles?: string | undefined
   ): void;
 
+  /**
+   * Renders a compiled template.
+   * Only available if using the Vue compiler.
+   *
+   * @param name Name of the template (filename).
+   * @param options optional [RenderOptions](https://jonataw.github.io/emgen/usage-vue#renderoptions).
+   */
   public abstract render(
     name: string,
     options?: RenderOptions | undefined
@@ -147,6 +154,9 @@ export abstract class BaseCompiler {
     }
   }
 
+  /**
+   * Checks that all required dependencies are installed according to configuration.
+   */
   protected checkDependencies(): void {
     Logger.info('Checking dependencies...');
     let n = 0;

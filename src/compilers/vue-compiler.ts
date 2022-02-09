@@ -217,7 +217,7 @@ export class VueCompiler extends BaseCompiler {
       });
     } catch (error) {
       Logger.error(
-        'Unable to inline CSS. If you are writing your styles in e.g. Sass, make sure to define it in Emgen configuration.'
+        'Unable to inline CSS. If you are writing your styles in, for instance, Sass, make sure to define it in Emgen configuration.'
       );
     }
 

@@ -1,5 +1,5 @@
 /**
- * Object check.
+ * Checks if item is an object.
  *
  * @param item
  */
@@ -8,7 +8,7 @@ export function isObject(item: unknown): boolean {
 }
 
 /**
- * Deep merge two objects.
+ * Deep merges two objects.
  *
  * @param target
  * @param sources
