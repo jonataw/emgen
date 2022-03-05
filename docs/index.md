@@ -9,7 +9,7 @@ Emgen allows you to easily generate HTML email templates. Features include:
 - **File inclusion**: Allows you to reuse common elements of your templates by keeping them in separate fields and referring to them with a comment.
 - [**Support for Vue templates**](/emgen/usage-vue): Use Vue.js to create your templates.
 
-Get started by first [installing](#installation) Emgen and then use either the [Usage - Default](/emgen/usage) or [Usage - Vue](/emgen/usage-vue) documentation.
+Get started by first [installing](#installation) Emgen and then follow either the [Usage - Default](/emgen/usage) or [Usage - Vue](/emgen/usage-vue) documentation.
 
 ### Installation
 
