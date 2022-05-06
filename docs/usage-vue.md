@@ -5,13 +5,13 @@
 To use Emgen with Vue templates, you have to install additional dependencies:
 
 ```bash
-npm install vue@">3.2.0" @vue/compiler-sfc">3.2.0"
+npm install vue@">3.2.0" @vue/compiler-sfc@">3.2.0"
 ```
 
 If you want to use Typescript in your Vue template files:
 
 ```bash
-npm install typescript">4.0.0"
+npm install typescript@">4.0.0"
 ```
 
 ### Quickstart
