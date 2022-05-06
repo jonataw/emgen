@@ -30,10 +30,10 @@ npm install stylus # Stylus support
 
 # Vue SFC support
 npm install vue@">3.2.0"
-npm install @vue/compiler-sfc">3.2.0"
+npm install @vue/compiler-sfc@">3.2.0"
 
 # Vue with Typescript
-npm install typescript">4.0.0"
+npm install typescript@">4.0.0"
 
 # Vue i18n support
 npm install vue-i18n@">9.0.0"
