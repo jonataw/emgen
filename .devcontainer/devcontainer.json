@@ -1,0 +1,14 @@
+{
+  "name": "emgen",
+  "service": "emgen",
+  "dockerComposeFile": "docker-compose.yml",
+  "workspaceFolder": "/workspace",
+  "settings": {},
+  "extensions": [
+    "EditorConfig.EditorConfig",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ],
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}
