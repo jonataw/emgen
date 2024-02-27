@@ -24,6 +24,7 @@ export class VueCompiler extends BaseCompiler {
   private renderToString: any;
   private i18n: any;
   private transpile: any;
+  private transpileModule: any;
 
   constructor(config: DeepRequired<EmgenOptions>) {
     super(config);
@@ -46,7 +47,9 @@ export class VueCompiler extends BaseCompiler {
     ).renderToString;
 
     if (this.config.transpile) {
-      this.transpile = this.importDependency('typescript').transpile;
+      const module = this.importDependency('typescript');
+      this.transpile = module.transpile;
+      this.transpileModule = module.transpileModule;
     }
     if (this.config.i18n) {
       this.i18n = this.importDependency('vue-i18n');
@@ -64,7 +67,39 @@ export class VueCompiler extends BaseCompiler {
     for (const path of sfcs) {
       this.compileTemplate(path);
     }
+
+    if (this.config.transpile) {
+      const ts = files.filter((file) => file.endsWith('.ts'));
+
+      for (const path of ts) {
+        this.compileTypescript(path);
+      }
+    }
   }
+
+  public compileTypescript = (path: string): void => {
+    const data = File.readFile(path);
+
+    const tsCompile = (source: string) => {
+      return this.transpileModule(source, { compilerOptions: { module: 1 } })
+        .outputText; // 1 = CommonJS
+    };
+
+    const compiled = tsCompile(data);
+
+    const name = path.substring(
+      path.indexOf(Path.normalize(this.config.input.templates.dir)) +
+        Path.normalize(this.config.input.templates.dir).length +
+        1
+    );
+
+    path = Path.normalize(
+      this.config.output.dir + '/' + name.replace('.ts', '.js')
+    );
+
+    Logger.info('Writing to:', path);
+    File.writeFile(path, compiled);
+  };
 
   public compileTemplate(path: string): void {
     path = Path.normalize(path);
@@ -87,8 +122,8 @@ export class VueCompiler extends BaseCompiler {
 
   private convertSFC(path: string): string {
     // Find the start index of the component definition.
-    // The component definition starts with 'defineComponent({' but can be it
-    // can be 'defineComponent<...>({'.
+    // The component definition starts with 'defineComponent({' but can be
+    // 'defineComponent<...>({'.
     const regex = /defineComponent(<.*>)?\({/g;
 
     let data;
@@ -159,9 +194,26 @@ export class VueCompiler extends BaseCompiler {
       template?: string;
     };
 
-    const component: EmComponent = (
-      await require(`${this.config.output.dir}/${name}`)
-    ).default;
+    let component: EmComponent;
+
+    try {
+      component = (await require(`${this.config.output.dir}/${name}`)).default;
+      if (!component) {
+        // If the component is not found, try to find it in the nested directory.
+        // Example: /templates/Nested/Nested.js vs /templates/Nested.js
+        component = (await require(`${this.config.output.dir}/${name}/${name}`))
+          .default;
+      }
+    } catch (error) {
+      try {
+        // If the component is not found, try to find it in the nested directory.
+        // Example: /templates/Nested/Nested.js vs /templates/Nested.js
+        component = (await require(`${this.config.output.dir}/${name}/${name}`))
+          .default;
+      } catch (error) {
+        throw new Error(`Template component '${name}' not found.`);
+      }
+    }
 
     const app: App = this.createSSRApp(component, options?.props);
 
