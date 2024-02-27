@@ -59,7 +59,8 @@ export class DefaultCompiler extends BaseCompiler {
 
     if (!styles) {
       styles = await this.preprocessStyles(
-        await this.importGlobalStyles(this.config.input.styles.dir)
+        await this.importGlobalStyles(this.config.input.styles.dir),
+        this.config.input.styles.prepend
       );
     }
 

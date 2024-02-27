@@ -208,6 +208,7 @@ export class VueCompiler extends BaseCompiler {
 
     style = await this.preprocessStyles(
       style,
+      this.config.input.styles.prepend,
       this.config.input.styles.preprocessor
     );
 
