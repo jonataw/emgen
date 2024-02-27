@@ -129,13 +129,17 @@ export abstract class BaseCompiler {
    * Preprocesses stylesheets with the configured preprocessor.
    * Preprocessors are not installed as dependencies of Emgen.
    *
-   * @param styles
-   * @param preprocessor
+   * @param styles Style string to preprocess.
+   * @param prepend Optionally prepend this string to the styles. Can be useful to define global variables.
+   * @param preprocessor Optionally preprocess styles in the styles.dir directory before injecting into template.
    */
   protected async preprocessStyles(
     styles: string,
+    prepend?: string,
     preprocessor?: `${Preprocessor}`
   ): Promise<string> {
+    styles = (prepend || '') + styles;
+
     if (!preprocessor) {
       return styles;
     }

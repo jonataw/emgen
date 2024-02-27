@@ -61,6 +61,12 @@ export interface EmgenOptions {
        * Stylus: stylus - @see https://www.npmjs.com/package/stylus
        */
       preprocessor?: `${Preprocessor}`;
+      /**
+       * Prepend this string to the styles. Can be useful to define global variables.
+       * @example ```'$primary-color:red;$text-color:#000;'```;
+       * @default ''
+       */
+      prepend?: string;
     };
   };
   output?: {
