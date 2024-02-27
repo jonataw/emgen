@@ -33,6 +33,33 @@ describe('vue-templates', (): void => {
     );
   });
 
+  test('should render nested templates', async (): Promise<void> => {
+    const emgen = createEmgen({
+      dir: __dirname + '/vue',
+      vue: true
+    });
+
+    const rendered = await emgen.render('Nested');
+    expect(rendered.includes('button') && rendered.includes('Nested')).toBe(
+      true
+    );
+  });
+
+  test('should work with external props', async (): Promise<void> => {
+    const emgen = createEmgen({
+      dir: __dirname + '/vue',
+      vue: true
+    });
+
+    const props = File.readFile(emgen.config.output.dir + '/props.js');
+    const rendered = await emgen.render('WithExternalProps', {
+      props: { name: 'ExternalProp' }
+    });
+
+    expect(props.length).toBeDefined();
+    expect(rendered.includes('ExternalProp')).toBe(true);
+  });
+
   test('should render with conditions', async (): Promise<void> => {
     const emgen = createEmgen({
       dir: __dirname + '/vue',
