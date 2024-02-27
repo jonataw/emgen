@@ -56,9 +56,12 @@ export class VueCompiler extends BaseCompiler {
   public compile(directory: string): void {
     directory = directory || this.config.input.templates.dir;
     const files = File.getFilesRecursively(directory);
-    Logger.info(`Converting ${files.length} Vue SFCs...`);
 
-    for (const path of files) {
+    // Filter out non-Vue SFC files.
+    const sfcs = files.filter((file) => file.endsWith('.vue'));
+    Logger.info(`Converting ${sfcs.length} Vue SFCs...`);
+
+    for (const path of sfcs) {
       this.compileTemplate(path);
     }
   }
@@ -83,7 +86,10 @@ export class VueCompiler extends BaseCompiler {
   }
 
   private convertSFC(path: string): string {
-    const COMPONENT_START = 'export default defineComponent({';
+    // Find the start index of the component definition.
+    // The component definition starts with 'defineComponent({' but can be it
+    // can be 'defineComponent<...>({'.
+    const regex = /defineComponent(<.*>)?\({/g;
 
     let data;
 
@@ -125,7 +131,9 @@ export class VueCompiler extends BaseCompiler {
       script = '';
     }
 
-    const position = script.indexOf(COMPONENT_START) + COMPONENT_START.length;
+    const match = script.match(regex);
+    if (!match) throw new Error('Component definition not found.');
+    const position = script.search(regex) + match[0].length;
     let component =
       script.substring(0, position) + template + script.substring(position);
 
