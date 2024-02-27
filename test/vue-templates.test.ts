@@ -113,4 +113,19 @@ describe('vue-templates', (): void => {
     const rendered2 = await emgen.render('ExtendsDeep');
     expect(rendered2.includes('color: red')).toBe(true);
   });
+
+  test('should prepend style', async (): Promise<void> => {
+    const emgen = createEmgen({
+      dir: __dirname + '/vue',
+      vue: true,
+      input: {
+        styles: {
+          prepend: 'button{background-color:red;}'
+        }
+      }
+    });
+
+    const rendered = await emgen.render('Basic');
+    expect(rendered.includes('background-color: red')).toBe(true);
+  });
 });
