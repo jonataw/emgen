@@ -1,14 +1,28 @@
 {
   "name": "emgen",
-  "service": "emgen",
-  "dockerComposeFile": "docker-compose.yml",
-  "workspaceFolder": "/workspace",
-  "settings": {},
-  "extensions": [
-    "EditorConfig.EditorConfig",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
-  ],
+  "image": "node:18",
   "postCreateCommand": "npm install",
-  "remoteUser": "node"
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "remote.autoForwardPorts": false
+      },
+      "search.exclude": {
+        ".gitignore": true,
+        "package-lock.json": true,
+        "dist/**": true
+      },
+      "editor.codeActionsOnSave": [
+        "source.organizeImports",
+        "source.fixAll.eslint"
+      ],
+      "editor.foldingImportsByDefault": true
+    }
+  }
 }
