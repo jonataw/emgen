@@ -14,6 +14,8 @@ Below are the possible configuration options that can be passed to `createEmgen`
 
 **`input.styles.preprocessor`**: Define a preprocessor for your styles. Valid options are `'sass'`, `'less'` or `'stylus'`.
 
+**`input.styles.prepend`**: Prepend a string to all stylesheets. Can be useful to define global variables.
+
 **`input.templates.dir`**: Override path to input templates directory.
 
 - Default: `[dir]/templates`
