@@ -6,6 +6,7 @@ import { Logger } from './logger';
 import { EmgenOptions } from './types/emgen';
 
 export { default as version } from './version';
+export type { EmgenOptions };
 
 export function createEmgen(options: EmgenOptions): BaseCompiler {
   let compiler: BaseCompiler;
