@@ -41,10 +41,6 @@ Below are the possible configuration options that can be passed to `createEmgen`
 - Default: `false`
 - Only used if `vue` is set to `true`.
 
-**`telemetry`**: Sends a simple telemetry request which includes **only the version of the currently installed Emgen package** to the maintainer's server. Set to `false` to opt out.
-
-- Default: `true`
-
 **`i18n.defaultLocale`**: Set the default fallback locale when using i18n. See [i18n](/emgen/usage-vue#i18n) for more information.
 
 - Only used if `vue` is set to `true`.
